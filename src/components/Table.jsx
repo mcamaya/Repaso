@@ -7,31 +7,27 @@ export default function Table({ urlApi, dataKeys }) {
     fetch(urlApi)
       .then((res) => res.json())
       .then((data) => setData(data))
-      .catch((err) => alert(err));
+      .catch((err) => console.log(err));
   });
 
   return (
     <div>
-      <table>
+      <table style={{ width: "100%", textAlign: "center" }}>
         <thead>
           <tr>
             {dataKeys.map((e, index) => (
-              <th key={index}>{e}</th>
+              <th key={index}>{e.toUpperCase()}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {
-            data.map((eData, index) => (
-              <tr key={index}>
-                {
-                  dataKeys.map((eKey, index) => (
-                    <td key={index}>{eData[eKey]}</td>
-                  ))
-                }
-              </tr>
-            ))
-          }
+          {data.map((eData, index) => (
+            <tr key={index}>
+              {dataKeys.map((eKey, index) => (
+                <td key={index}>{eData[eKey]}</td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
