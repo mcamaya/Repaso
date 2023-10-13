@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Table({ urlApi, dataKeys }) {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(urlApi)
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((err) => console.log(err));
-  });
+  }, [data]);
 
   const deletaData = (id) => {
     fetch(`${urlApi}/${id}`, {
@@ -21,6 +23,11 @@ export default function Table({ urlApi, dataKeys }) {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
+
+  const updateHandler = (clienteId) => {
+    localStorage.setItem('clienteId', clienteId);
+    navigate('update');
+  }
 
   return (
     <div>
@@ -44,6 +51,14 @@ export default function Table({ urlApi, dataKeys }) {
                   onClick={() => deletaData(eData._id)}
                 >
                   Eliminar
+                </button>
+              </td>
+              <td>
+                <button
+                  style={{ backgroundColor: "blue" }}
+                  onClick={() => updateHandler(eData._id)}
+                >
+                  Editar
                 </button>
               </td>
             </tr>
