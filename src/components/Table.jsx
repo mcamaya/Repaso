@@ -10,6 +10,18 @@ export default function Table({ urlApi, dataKeys }) {
       .catch((err) => console.log(err));
   });
 
+  const deletaData = (id) => {
+    fetch(`${urlApi}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <table style={{ width: "100%", textAlign: "center" }}>
@@ -26,6 +38,14 @@ export default function Table({ urlApi, dataKeys }) {
               {dataKeys.map((eKey, index) => (
                 <td key={index}>{eData[eKey]}</td>
               ))}
+              <td>
+                <button
+                  style={{ backgroundColor: "red" }}
+                  onClick={() => deletaData(eData._id)}
+                >
+                  Eliminar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
